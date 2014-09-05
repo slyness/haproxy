@@ -45,8 +45,9 @@ pool = ["options httpchk #{node['haproxy']['httpchk']}"] if node['haproxy']['htt
 servers = pool_members.uniq.map do |s|
   "#{s[:hostname]} #{s[:ipaddress]}:#{node['haproxy']['member_port']} weight 1 maxconn #{node['haproxy']['member_max_connections']} check"
 end
-haproxy_lb 'servers-http' do
+haproxy_lb "servers-#{node[:haproxy][:mode]}" do
   type 'backend'
+  mode node[:haproxy][:mode]
   servers servers
   params pool
 end
@@ -57,9 +58,9 @@ if node['haproxy']['enable_ssl']
   servers = pool_members.uniq.map do |s|
     "#{s[:hostname]} #{s[:ipaddress]}:#{node['haproxy']['ssl_member_port']} weight 1 maxconn #{node['haproxy']['member_max_connections']} check"
   end
-  haproxy_lb 'servers-http' do
+  haproxy_lb "servers-#{node[:haproxy][:mode]}" do
     type 'backend'
-    mode 'tcp'
+    mode node[:haproxy][:mode]
     servers servers
     params pool
   end
