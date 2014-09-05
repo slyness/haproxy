@@ -43,6 +43,7 @@ default['haproxy']['enable_ssl'] = false
 default['haproxy']['ssl_incoming_address'] = "0.0.0.0"
 default['haproxy']['ssl_incoming_port'] = 443
 default['haproxy']['ssl_member_port'] = 8443
+default['haproxy']['tcpchk'] = nil
 default['haproxy']['httpchk'] = nil
 default['haproxy']['ssl_httpchk'] = nil
 default['haproxy']['enable_admin'] = true
